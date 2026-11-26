@@ -54,8 +54,20 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;padding:20px}
 <section id="calendar" class="panel"><div class="card"><h2>Calendario</h2><p class="muted">Il calendario del girone verrà generato quando la stagione sarà configurata.</p><div class="notice">Formula prevista: andata e ritorno, con un turno di riposo se i partecipanti sono dispari.</div></div></section>
 <section id="admin" class="panel"><div class="card"><h2>Pannello Admin – anteprima</h2><p class="muted">Impostazioni di esempio. In questa demo non sono protette e non devono essere usate per gestire gemme o risultati reali.</p><div class="grid"><div><label for="killPts">Punti per eliminazione</label><input id="killPts" type="number" value="1" step=".5"></div><div><label for="winPts">Punti per vittoria</label><input id="winPts" type="number" value="3" step=".5"></div><div><label for="deathPts">Penalità per morte</label><input id="deathPts" type="number" value="1" step=".5"></div><div><label for="damagePts">Punti ogni 1000 danni</label><input id="damagePts" type="number" value=".5" step=".5"></div></div><p><button class="action primary" id="saveRules">Salva valori (solo demo)</button></p><hr style="border:0;border-top:1px solid var(--line)"><h3>Calcolo punti prova</h3><div class="grid"><div><label for="kills">Eliminazioni</label><input id="kills" type="number" min="0" value="2"></div><div><label for="deaths">Morti</label><input id="deaths" type="number" min="0" value="1"></div><div><label for="damage">Danni</label><input id="damage" type="number" min="0" value="2750"></div><div><label for="won">Vittoria?</label><select id="won"><option value="0">No</option><option value="1">Sì</option></select></div></div><button class="action" id="calc">Calcola punti</button><h3 id="scoreResult">Punteggio: —</h3></div></section>
 </main><footer>Fantabrawl · Anteprima dimostrativa</footer>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script>
-const names=["Shelly","Colt","Bull","Brock","Rico","Spike","Crow","Leon","Chester","Poco","8-Bit","Surge","Cordelius","Edgar","Buzz"];
+ };
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+
+auth.signInAnonymously().catch(error => {
+  console.error("Errore Firebase:", error);
+});
+const names=["Lily","Bibi","Alli","Maxine","Tick","Buster","Lumi","Meg","Pocho","Cosmo","Piper","Ziggy","Doug","Dynamike","Melodie","Gray","Lola","Penny","Pam","Jae-Jong","Gus","Maisie","Mina","Gigi","Najia","Otis","Lou","Berry","Chuck","Fang","Meeple","Edgar","Bo","Kit","Kenji","Energetik","Jessie","Bea","Eugenio","Leon","Jacky","Willow","Ollie","Sandy","Squick","Eve","Colette","Frank","Gelindo","Carl","Pierce","Bombardino","Colt","Belle","El Primo","Stecca","Grom","Ambra","Buzz","Finx","Mr. P","Griff","Bonnie","Hank","Ringhio","Starr Nova","Rosa","Charlie","Nita","Glowy","Shade","Chester","8-Bit","Trunk","Shelly","Larry & Lawrie","Tara","Juju","Spike","Cordelius","Moe","Sam","Nori","Mandy","Barryl","Corvo","Semino","Wendy","Ash","Kaze","Iris","Bolt","Mico","Stu","R-T","Brock","Byron","Damian","Draco","Emz","Sirius","Angelo","Bull","Mortis","Pearl"];
 const KEY="fantabrawl_demo_v2";
 let state=JSON.parse(localStorage.getItem(KEY)||'{"players":[],"listings":[],"rules":{"kill":1,"win":3,"death":1,"damage":0.5}}');
 const $=id=>document.getElementById(id);
