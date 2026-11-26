@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffdc36">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Fantabrawl — Anteprima</title>
+<style>
+:root{--yellow:#ffdc36;--blue:#1769d2;--blue2:#0e4eaa;--ink:#14243a;--paper:#fffdf4;--white:#fff;--muted:#65748a;--line:#e7eaf0;--shadow:0 12px 35px #15335b18}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff8cf,#f4f8ff 55%,#e8f2ff);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+header{background:var(--yellow);padding:24px 18px 20px;border-bottom:6px solid var(--blue);position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#fff8;right:-65px;top:-125px}
+.head{max-width:1050px;margin:auto;position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{font-size:clamp(28px,5vw,44px);margin:0;letter-spacing:-1.5px}header p{margin:5px 0 0;font-weight:700;color:#28476b}
+.pill{background:#fff;border:2px solid var(--blue);border-radius:999px;padding:9px 14px;font-weight:800;color:var(--blue)}
+nav{max-width:1050px;margin:18px auto 0;padding:0 14px;display:flex;gap:8px;overflow:auto}
+nav button{white-space:nowrap}
+button{border:0;border-radius:12px;background:var(--blue);color:#fff;padding:11px 15px;font-weight:800;cursor:pointer;transition:.15s}
+button:hover{background:var(--blue2);transform:translateY(-1px)}button.secondary{background:#e9f1ff;color:var(--blue)}button.yellow{background:var(--yellow);color:var(--ink)}button.danger{background:#ffe7e7;color:#a32626}
+main{max-width:1050px;margin:18px auto;padding:0 14px 40px}
+.panel{background:#ffffffeb;border:1px solid #e3eaf3;border-radius:20px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+h2{margin:0 0 14px;font-size:25px}h3{margin:0 0 8px}
+.muted{color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fff}
+.card strong{font-size:17px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+input,select{padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;max-width:100%;background:white}
+input:focus,select:focus{outline:3px solid #1769d233;border-color:var(--blue)}
+form{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.stat{font-size:28px;font-weight:900;color:var(--blue)}.tag{display:inline-block;border-radius:999px;background:#fff2b3;padding:5px 9px;font-size:12px;font-weight:800}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:13px}
+.notice{padding:12px 14px;background:#fff5c7;border-left:4px solid var(--yellow);border-radius:10px;line-height:1.45}
+.hidden{display:none!important}.empty{color:var(--muted);padding:18px;text-align:center}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px}
+@media(max-width:600px){.panel{padding:15px}td,th{padding:8px 5px;font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div><h1>⭐ FANTABRAWL</h1><p>La tua lega di Brawl Stars</p></div><div class="pill" id="wallet">💎 500 gemme</div></div></header>
+<nav>
+<button class="yellow" onclick="show('mercato')">🛒 Mercato</button>
+<button class="secondary" onclick="show('squadre')">👥 Squadre</button>
+<button class="secondary" onclick="show('classifica')">🏆 Classifica</button>
+<button class="secondary" onclick="show('calendario')">📅 Calendario</button>
+<button class="secondary" onclick="show('admin')">⚙️ Admin (anteprima)</button>
+</nav>
+<main>
+<div class="notice"><b>Anteprima di Fantabrawl:</b> questa versione dimostrativa salva i dati solo in questo browser. Non è ancora collegata a Firebase e non va pubblicata come versione definitiva: prima configureremo i controlli sicuri per gemme, mercato e Admin.</div>
+<section id="mercato" class="panel">
+<h2>🛒 Mercato Brawler</h2><p class="muted">Cerca un Brawler, inserisci il prezzo richiesto dal venditore e acquistalo. Il prezzo viene pagato in gemme.</p>
+<div id="joinBox"><form onsubmit="join(event)"><input id="playerName" maxlength="20" placeholder="Scegli il tuo nome" required><button>Entra nella lega</button></form><p class="muted">Massimo 8 partecipanti. In questa anteprima puoi creare il tuo profilo locale.</p></div>
+<div class="row"><input id="search" placeholder="Cerca un Brawler..." oninput="renderMarket()"><span class="tag">15 Brawler nel mercato</span></div>
+<div id="marketGrid" class="grid"></div>
+</section>
+<section id="squadre" class="panel hidden"><h2>👥 Squadre</h2><div id="teams" class="grid"></div></section>
+<section id="classifica" class="panel hidden"><h2>🏆 Classifica</h2><div id="ranking"></div></section>
+<section id="calendario" class="panel hidden"><h2>📅 Calendario</h2><p class="muted">Girone di andata e ritorno; il ciclo si ripete fino a giugno. Il calendario definitivo verrà generato quando saranno iscritti i partecipanti.</p><div id="fixtures"></div></section>
+<section id="admin" class="panel hidden"><h2>⚙️ Pannello Admin — anteprima</h2>
+<div class="notice">Il pannello qui è solo una bozza grafica. Non c'è una password dimostrativa: l'accesso Admin reale dovrà essere verificato da un backend protetto, non dal codice HTML.</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>Punteggi</h3><label>Uccisione <input id="ptsKill" type="number" step=".5" value="1"></label><br><br><label>Vittoria <input id="ptsWin" type="number" step=".5" value="3"></label><br><br><label>Morte <input id="ptsDeath" type="number" step=".5" value="-0.5"></label><br><br><label>Ogni 1.000 danni <input id="ptsDamage" type="number" step=".5" value="0.5"></label><p><button onclick="savePoints()">Salva punteggi demo</button></p></div>
+<div class="card"><h3>Inserisci risultato demo</h3><form onsubmit="addResult(event)"><select id="matchPlayer"></select><input id="kills" type="number" min="0" placeholder="Uccisioni" required><input id="deaths" type="number" min="0" placeholder="Morti" required><input id="damage" type="number" min="0" placeholder="Danni" required><select id="won"><option value="yes">Vittoria</option><option value="no">Sconfitta</option></select><button>Calcola punti</button></form><p class="muted">I danni contano solo a blocchi completi di 1.000.</p></div>
+<div class="card"><h3>Mercati speciali</h3><p class="muted">Nella versione completa l'admin potrà aprire e chiudere i mercati riparazione/trasferimento e acquistare per conto dei partecipanti.</p><button class="secondary" onclick="alert('Funzione prevista nella versione collegata e protetta.')">Gestione mercati</button></div>
+</div>
+</section>
+</main><footer>Fantabrawl • Anteprima locale non sincronizzata</footer>
+<script>
+const brawlers=["Chester","Cordelius","Shelly","Colt","Spike","Leon","Crow","Edgar","Mortis","Dynamike","Surge","8-Bit","Poco","Kenji","Lily"];
+let state=JSON.parse(localStorage.getItem("fantabrawlPreview")||"null")||{players:{},picks:{},points:{},rules:{kill:1,win:3,death:-.5,damage:.5},results:[]};
+let me=localStorage.getItem("fantabrawlPreviewMe")||"";
+function save(){localStorage.setItem("fantabrawlPreview",JSON.stringify(state));render()}
+function show(id){document.querySelectorAll("main>section").forEach(x=>x.classList.toggle("hidden",x.id!==id));}
+function join(e){e.preventDefault();let n=document.getElementById("playerName").value.trim();if(!n)return;if(Object.keys(state.players).length>=8)return alert("Lega piena!");if(Object.values(state.players).some(p=>p.name.toLowerCase()===n.toLowerCase()))return alert("Nome già usato.");me="p"+Date.now();state.players[me]={name:n,gems:500};state.points[me]=0;localStorage.setItem("fantabrawlPreviewMe",me);save()}
+function renderMarket(){let q=(document.getElementById("search")?.value||"").toLowerCase();let g=document.getElementById("marketGrid");if(!g)return;g.innerHTML="";brawlers.filter(b=>b.toLowerCase().includes(q)).forEach(b=>{let owner=state.picks[b],card=document.createElement("div");card.className="card";let title=document.createElement("strong");title.textContent=b;card.append(title);let p=document.createElement("p");p.className="muted";p.textContent=owner?"Posseduto da "+(state.players[owner]?.name||"Partecipante"):"Disponibile";card.append(p);if(!owner&&me&&state.players[me]){let f=document.createElement("form");f.innerHTML='<input type="number" min="1" step="1" placeholder="Prezzo in gemme" required style="width:135px"><button>Acquista</button>';f.onsubmit=e=>{e.preventDefault();let price=Number(f.querySelector("input").value);let player=state.players[me];if(price>player.gems)return alert("Non hai abbastanza gemme.");if(!confirm("Acquistare "+b+" per "+price+" gemme?"))return;player.gems-=price;state.picks[b]={owner:me,price};save()};card.append(f)}g.append(card)})}
+function render(){let p=state.players[me];document.getElementById("wallet").textContent="💎 "+(p?p.gems:500)+" gemme";document.getElementById("joinBox").classList.toggle("hidden",!!p);renderMarket();let team=document.getElementById("teams");team.innerHTML="";Object.entries(state.players).forEach(([id,x])=>{let owned=Object.entries(state.picks).filter(([b,v])=>v.owner===id).map(([b])=>b);let d=document.createElement("div");d.className="card";d.innerHTML="<strong></strong><p class='muted'></p><span class='tag'></span>";d.children[0].textContent=x.name;d.children[1].textContent=owned.join(", ")||"Nessun Brawler";d.children[2].textContent="💎 "+x.gems+" gemme";team.append(d)});if(!Object.keys(state.players).length)team.innerHTML='<div class="empty">Ancora nessun partecipante.</div>';
+let rank=document.getElementById("ranking");let rows=Object.entries(state.players).sort((a,b)=>(state.points[b[0]]||0)-(state.points[a[0]]||0));rank.innerHTML=rows.length?"<table><thead><tr><th>#</th><th>Giocatore</th><th>Punti</th></tr></thead><tbody>"+rows.map(([id,x],i)=>`<tr><td>${i+1}</td><td>${escapeHtml(x.name)}</td><td>${state.points[id]||0}</td></tr>`).join("")+"</tbody></table>":'<div class="empty">Nessun partecipante.</div>';
+let sel=document.getElementById("matchPlayer");sel.innerHTML=Object.entries(state.players).map(([id,x])=>`<option value="${id}">${escapeHtml(x.name)}</option>`).join("");document.getElementById("fixtures").innerHTML=Object.keys(state.players).length<2?"Servono almeno due partecipanti per generare il calendario.":"Calendario completo: verrà creato automaticamente all'avvio della stagione.";
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function savePoints(){state.rules={kill:Number(ptsKill.value),win:Number(ptsWin.value),death:Number(ptsDeath.value),damage:Number(ptsDamage.value)};save();alert("Punteggi demo salvati.")}
+function addResult(e){e.preventDefault();let id=matchPlayer.value,k=Number(kills.value),d=Number(deaths.value),dm=Number(damage.value),win=won.value==="yes";let r=state.rules;let score=k*r.kill+d*r.death+(win?r.win:0)+Math.floor(dm/1000)*r.damage;state.points[id]=(state.points[id]||0)+score;state.results.push({id,k,d,dm,win,score});save();alert("Punti assegnati: "+score)}
+render();
+</script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {})); }</script>
+</body></html>

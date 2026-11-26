@@ -1,0 +1,11 @@
+{
+  "name": "Fantabrawl",
+  "short_name": "Fantabrawl",
+  "description": "La tua lega di Brawl Stars",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8cf",
+  "theme_color": "#ffdc36",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
