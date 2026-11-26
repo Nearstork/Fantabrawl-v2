@@ -1,0 +1,12 @@
+FANTABRAWL - FILE PRONTI PER GITHUB
+
+1. Estrai tutti i file da questo ZIP.
+2. Apri la repository GitHub Fantabrawl-v2.
+3. Premi Add file > Upload files.
+4. Trascina dentro TUTTI E QUATTRO i file estratti:
+   index.html, manifest.webmanifest, sw.js, icon.svg
+5. In basso premi Commit changes.
+
+ATTENZIONE:
+Questa è un'anteprima dimostrativa: usa la memoria locale del browser e NON sincronizza i dati tra partecipanti.
+Non usare questa demo per gemme, acquisti o risultati reali. La connessione Firebase e le regole sicure del server non sono ancora configurate.
