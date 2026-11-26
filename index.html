@@ -58,7 +58,15 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;padding:20px}
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script>
- };
+const firebaseConfig = {
+  apiKey: "AIzaSyD4ggcX5t-Ssle7yK4xk-4WGOBwZMxATHo",
+  authDomain: "fantabrawl-92103.firebaseapp.com",
+  databaseURL: "https://fantabrawl-92103-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "fantabrawl-92103",
+  storageBucket: "fantabrawl-92103.firebasestorage.app",
+  messagingSenderId: "156509916126",
+  appId: "1:156509916126:web:acf96f7f923a74fc4bab4f"
+};
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
